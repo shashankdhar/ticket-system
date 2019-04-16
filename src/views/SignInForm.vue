@@ -2,10 +2,13 @@
   <div class="wrapper">
     <div class="container">
       <h1>Welcome</h1>    
-      <form class="form">
-        <input type="text" placeholder="Username" />
-        <input type="password" placeholder="Password" />
-        <button type="submit" id="login-button">Login</button>
+      <form ref="login-form" class="form">
+        <input type="text" v-model="username" placeholder="Username" required />
+        <input type="password" v-model="password" placeholder="Password" required />
+        <button class="btn-login" v-on:click="submit">Login</button>
+        <span class="error-login" v-if="submitted && auth" role="alert">
+            Authentication Failed! Please check your credentials.
+        </span>
       </form>
     </div>
   </div>
@@ -13,18 +16,29 @@
 
 <script>
 
-{/*import Users from '@/assets/User.json'*/}
+import Users from '@/assets/User.json'
+import router from '@/router'
 
 export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      submitted: false,
+      auth : false
     }
   },
   methods: {
-    onSubmit () {
-      return false;
+    submit () {
+      /*check for users data for the inputs user has given*/
+      this.submitted = true;
+      for (var i = Users.length - 1; i >= 0; i--) {
+        if (this.username == Users[i].id && this.password == Users[i].password) {
+          router.replace('details');
+          break;
+        }
+      }      
+      this.auth = true;
     }
   }
 }
