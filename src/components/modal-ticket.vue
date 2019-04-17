@@ -1,58 +1,82 @@
 <script>
   export default {
     name: 'modal',
+    props: {
+      ticket: Object
+    },
     methods: {
       close() {
         this.$emit('close');
       },
-    },
+    }
   };
 </script>
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal modal-ticket"
-        role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-      >
-        <header
-          class="modal-header"
-          id="modalTitle"
-        >
+      <div class="modal modal-ticket" role="dialog"  aria-labelledby="modalTitle" aria-describedby="modalDescription">
+        <header class="modal-header" id="modalTitle">
           <slot name="header">
-            This is the default tile!
-
-            <button
-              type="button"
-              class="btn-close"
-              @click="close"
-              aria-label="Close modal"
-            >
-              x
-            </button>
+            <h5>Ticket Details</h5>
+            <button type="button" class="btn-close"  @click="close" aria-label="Close modal">x</button>
           </slot>
         </header>
-        <section
-          class="modal-body"
-          id="modalDescription"
-        >
+        <section class="modal-body" id="modalDescription">
           <slot name="body">
-            I'm the default body!
+            <table class="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th scope="row">Ticket No</th>
+                <td>{{ ticket.ticket }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Requestor Id</th>
+                <td>{{ ticket.Requestor }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Requestor Seniority</th>
+                <td>{{ ticket.RequestorSeniority }}</td>
+              </tr>
+              <tr>
+                <th scope="row">IT Owner</th>
+                <td>{{ ticket.ITOwner }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Filed Against</th>
+                <td>{{ ticket.FiledAgainst }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Ticket Type</th>
+                <td>{{ ticket.TicketType }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Severity</th>
+                <td>{{ ticket.Severity }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Priority</th>
+                <td>{{ ticket.Priority }}</td>
+              </tr>
+              <tr>
+                <th scope="row">daysOpen</th>
+                <td>{{ ticket.daysOpen }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Satisfaction</th>
+                <td>{{ ticket.Satisfaction }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Ticket Creation Date</th>
+                <td>{{ ticket['Ticket Creation Date'] }}</td>
+              </tr>
+            </tbody>
+          </table>
           </slot>
         </section>
         <footer class="modal-footer">
-          <slot name="footer">
-            I'm the default footer!
-
+          <slot name="footer">            
             <button
-              type="button"
-              class="btn-green"
-              @click="close"
-              aria-label="Close modal"
-            >
-              Close me!
-            </button>
+              type="button" class="btn-green" @click="close" aria-label="Close modal" >Close</button>
           </slot>
         </footer>
       </div>
@@ -82,7 +106,7 @@
 
   .modal-header,
   .modal-footer {
-    padding: 15px;
+    padding: 5px 15px;
     display: flex;
   }
 
@@ -90,6 +114,10 @@
     border-bottom: 1px solid #eeeeee;
     color: #4AAE9B;
     justify-content: space-between;
+  }
+
+  .modal-header h5 {
+      margin-top: 0.5rem;
   }
 
   .modal-footer {
@@ -105,7 +133,7 @@
   .btn-close {
     border: none;
     font-size: 20px;
-    padding: 20px;
+    /*padding: 20px;*/
     cursor: pointer;
     font-weight: bold;
     color: #4AAE9B;
@@ -117,5 +145,6 @@
     background: #4AAE9B;
     border: 1px solid #4AAE9B;
     border-radius: 2px;
+    padding: 5px;
   }
 </style>

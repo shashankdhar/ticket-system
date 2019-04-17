@@ -1,3 +1,8 @@
+.detail-wrapper .navbar {
+    background-color: rgb(227, 242, 253);
+    padding: 0.25rem 1rem;
+}
+
 .container-details {
   display: flex;
   flex-direction: column;
@@ -7,20 +12,26 @@
 
 .container-details > .card {
   min-width: 330px;
-  margin: 10px 5px;
+  margin: 5px;
   height: 250px;
 }
 
-.card-ticket-table {
+.container-details > .card-ticket-table {
   width: 100%;
-  min-height: 350px;
+  min-height: 330px;
   overflow: auto;
+  font-size: 0.8rem;
+/*  margin: 0;
+  padding: 10px;*/
 }
 
+.card-ticket-table .table {
+  margin-bottom: 0;
+}
 
 th {
-  background-color: #42b983;
-  color: rgba(255,255,255,0.66);
+/*  background-color: #42b983;
+  color: rgba(255,255,255,0.66);*/
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -84,12 +95,26 @@ th {
 
 .modal-body {
   margin: 20px 0;
+  color: black;
 }
 
 .modal-default-button {
   float: right;
 }
 
+.card-content .form-group {
+  margin-bottom: 0;
+}
+
+.card-content .form-group input,
+.card-content .form-group button {
+  font-size: 0.8rem;
+}
+    
+form{
+  padding: 0;
+  margin-top: 8px;
+}
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
@@ -119,10 +144,12 @@ th {
     left: 50%;
     z-index: 1050;
     transform: translate(-50%, -50%);
+    -webkit-box-shadow: 2px 2px 5px 1px;
+    box-shadow: 2px 2px 5px 1px;
     /* margin-top: -25%; */
     /* margin-left: -25%; */
     width: 50%;
-    height: 50%;
+    height: 65%;
     overflow: hidden;
     outline: 0;
 }

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="detail-wrapper">
     <div class="container-details">
       <div class="card">
         <canvas id="chart1"></canvas>
@@ -16,13 +16,9 @@
     </div>
     <div class="container-details">
       <div class="card card-ticket-table">
-        <div id="search">
-          Search <input name="query" v-model="searchQuery" />
-        </div>
-        <div class="card-content">
-              <gridTicket :heroes="gridData" :columns="gridColumns" :open-ticket="showModal" :filter-key="searchQuery"></gridTicket>
-              <modal v-show="isModalVisible" @close="closeModal" />       
-        </div>
+        <div class="col-sm-12">
+            <gridTicket :tickets="gridData" :columns="gridColumns" :filter-key="searchQuery"></gridTicket> 
+        </div>      
       </div>
     </div>
   </main>
@@ -31,7 +27,6 @@
 <script>
 
 import Chart from 'chart.js';
-import modal from '@/components/modal-ticket.vue'
 import gridTicket from '@/components/grid-ticket.vue'
 import tickets from '@/assets/Sample Data.json'
 import * as AppConstants from "../constant";
@@ -103,13 +98,11 @@ export default {
       chartData1: arr_count_categories,
       chartData2: arr_count_severity,
       chartData3: arr_count_satisfaction,
-      chartData4: arr_count_priority,
-      isModalVisible: false
+      chartData4: arr_count_priority
     }
   },
   components: {
-    gridTicket,
-    modal
+    gridTicket
   },
   mounted() {
     this.createChart('chart1', this.getChartdata('chart1'));
@@ -171,12 +164,6 @@ export default {
         data: chartData.data,
         options: chartData.options,
       });
-    },
-    showModal() {
-      this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
     }
   }
 }
