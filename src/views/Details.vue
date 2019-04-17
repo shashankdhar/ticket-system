@@ -10,6 +10,9 @@
       <div class="card">
         <canvas id="chart3"></canvas>
       </div>
+      <div class="card">
+        <canvas id="chart4"></canvas>
+      </div>
     </div>
     <div class="container-details">
       <div class="card card-ticket-table">
@@ -31,9 +34,30 @@ import Chart from 'chart.js';
 import modal from '@/components/modal-ticket.vue'
 import gridTicket from '@/components/grid-ticket.vue'
 import tickets from '@/assets/Sample Data.json'
+import * as AppConstants from "../constant";
 
-var gridData = Array(100).fill(null).map(function() {
-  return Object.assign({}, tickets[Math.floor(Math.random() * 4)]);
+const data_categories = { 'Software' : 0, 'Hardware' : 0, 'Systems' : 0, 'Access/Login' : 0 }
+const data_severity = { '0': 0, '1' : 0, '2' : 0, '3' : 0, '4' : 0 }
+const data_priority = { '0' : 0, '1' : 0, '2' : 0, '3' : 0 }
+const data_satisfaction = { '0' : 0, '1' : 0, '2' : 0, '3' : 0 }
+
+const gridData = tickets.forEach(function(ticket) {
+   if (data_categories.hasOwnProperty(ticket.FiledAgainst)) {
+      data_categories[ticket.FiledAgainst] += 1; 
+   }
+   let severity = ticket.Severity.substring(0,1);
+   if (data_severity.hasOwnProperty(severity)) {
+      data_severity[severity] += 1; 
+   }
+   let satisfaction = ticket["Satisfaction"].substring(0,1);
+   if (data_satisfaction.hasOwnProperty(satisfaction)) {
+      data_satisfaction[satisfaction] += 1; 
+   }
+   let priority = ticket.Priority.substring(0,1);
+   if (data_priority.hasOwnProperty(priority)) {
+      data_priority[priority] += 1; 
+   }
+
 });
 
 const chart_options = {
@@ -41,68 +65,33 @@ const chart_options = {
   maintainAspectRatio: false
 }
 
-const pie_one = {
-    type: 'pie',
-    data: {
-          datasets: [{
-              data: [10, 20, 30],
-              backgroundColor: [
-                'red',
-                'yellow',
-                'blue']
-          }],
-          labels: [
-              'Red',
-              'Yellow',
-              'Blue'
-          ]
-    },
-    options: chart_options
+const arr_count_categories = [];
+const arr_count_severity = [];
+const arr_count_priority = [];
+const arr_count_satisfaction = [];
+
+for (let property in data_categories) {
+    if (data_categories.hasOwnProperty(property)) {
+        arr_count_categories.push(data_categories[property]);
+    }
 }
 
-const pie_two = {
-    type: 'doughnut',
-    data: {
-          datasets: [{
-              data: [10, 20, 30],
-              backgroundColor: [
-                'red',
-                'yellow',
-                'blue']
-          }],
-          labels: [
-              'Red',
-              'Yellow',
-              'Blue'
-          ]
-    },
-    options: chart_options
+for (let property in data_severity) {
+    if (data_severity.hasOwnProperty(property)) {
+        arr_count_severity.push(data_severity[property]);
+    }
 }
 
-const pie_three = {
-    type: 'bar',
-    data: {
-          datasets: [{
-              data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-              backgroundColor: 'linear-gradient(to right, #43e97b 0%, #38f9d7 100%)',
-              label: 'Ticket Data'
-          }],
-          labels: [
-              'January',
-              'Febuary',
-              'March',
-              'April',
-              'May',
-              'June',
-              'July',
-              'August',
-              'September',
-              'October',
-              'November',
-              'December'
-          ]
-    },
-    options: chart_options
+for (let property in data_priority) {
+    if (data_priority.hasOwnProperty(property)) {
+        arr_count_priority.push(data_priority[property]);
+    }
+}
+
+for (let property in data_satisfaction) {
+    if (data_satisfaction.hasOwnProperty(property)) {
+        arr_count_satisfaction.push(data_satisfaction[property]);
+    }
 }
 
 export default {
@@ -110,10 +99,11 @@ export default {
     return {
       searchQuery: '',
       gridColumns: ['ticket', 'Requestor', 'Requestor', 'RequestorSeniority', 'FiledAgainst', 'TicketType', 'Severity', 'Priority'],
-      gridData: gridData,
-      chartData1: pie_one,
-      chartData2: pie_two,
-      chartData3: pie_three,
+      gridData: tickets,
+      chartData1: arr_count_categories,
+      chartData2: arr_count_severity,
+      chartData3: arr_count_satisfaction,
+      chartData4: arr_count_priority,
       isModalVisible: false
     }
   },
@@ -122,11 +112,58 @@ export default {
     modal
   },
   mounted() {
-    this.createChart('chart1', this.chartData1);
-    this.createChart('chart2', this.chartData2);
-    this.createChart('chart3', this.chartData3);
+    this.createChart('chart1', this.getChartdata('chart1'));
+    this.createChart('chart2', this.getChartdata('chart2'));
+    this.createChart('chart3', this.getChartdata('chart3'));
+    this.createChart('chart4', this.getChartdata('chart4'));
   },
   methods: {
+    getChartdata(chartId) {
+      let type = '';
+      let data_counts = [];
+      let color = [];
+      let labels = [];      
+      switch (chartId) {
+        case 'chart1':
+          type = 'pie';
+          data_counts = this.chartData1;
+          color = AppConstants.CHART1_COLOR;
+          labels = AppConstants.CHART1_LABELS;
+          break; 
+        case 'chart2':
+          type = "doughnut";
+          data_counts = this.chartData2;
+          color = AppConstants.CHART2_COLOR;
+          labels = AppConstants.CHART2_LABELS;
+          break;
+        case 'chart3':
+          type = "pie";
+          data_counts = this.chartData3;
+          color = AppConstants.CHART3_COLOR;
+          labels = AppConstants.CHART3_LABELS;
+          break;
+        case 'chart4':
+          type = "pie";
+          data_counts = this.chartData4;
+          color = AppConstants.CHART4_COLOR;
+          labels = AppConstants.CHART4_LABELS;
+          break;
+      }
+      let data_chart = {
+            type: type,
+            data: {
+                  datasets: [{
+                      data: data_counts,
+                      backgroundColor: color,
+                      borderColor: ["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
+                      borderWidth:1                   
+                  }],
+                  labels: labels
+            },
+            options: chart_options
+            }
+      return data_chart;
+    },
     createChart(chartId, chartData) {
       const ctx = document.getElementById(chartId);
       const myChart = new Chart(ctx, {

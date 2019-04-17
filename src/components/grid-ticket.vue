@@ -1,7 +1,7 @@
 <!-- component template -->
 <template>
-  <section>
-      <table>
+  <section class="table-responsive">
+      <table class="table table-striped table-bordered table-hover table-sm">
         <thead>
           <tr>
             <th v-for="key in columns"

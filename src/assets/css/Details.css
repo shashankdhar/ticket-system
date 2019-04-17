@@ -6,10 +6,9 @@
 }
 
 .container-details > .card {
-  min-width: 300px;
+  min-width: 330px;
   margin: 10px 5px;
   height: 250px;
-  border: 1px solid red;
 }
 
 .card-ticket-table {
@@ -18,13 +17,6 @@
   overflow: auto;
 }
 
-table {
-  border: 2px solid #42b983;
-  border-radius: 3px;
-  color: black;
-  width: 100%;
-  background-color: #fff;
-}
 
 th {
   background-color: #42b983;
@@ -34,23 +26,6 @@ th {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-td {
-  background-color: #f9f9f9;
-}
-
-th, td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-
-th.active {
-  color: #fff;
-}
-
-th.active .arrow {
-  opacity: 1;
 }
 
 .arrow {
@@ -146,7 +121,6 @@ th.active .arrow {
     transform: translate(-50%, -50%);
     /* margin-top: -25%; */
     /* margin-left: -25%; */
-    display: none;
     width: 50%;
     height: 50%;
     overflow: hidden;
