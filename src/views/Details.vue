@@ -115,31 +115,38 @@ export default {
       let type = '';
       let data_counts = [];
       let color = [];
-      let labels = [];      
+      let labels = [];
+      let title = '';
+      let isLegendVisible = true;
       switch (chartId) {
         case 'chart1':
           type = 'pie';
           data_counts = this.chartData1;
           color = AppConstants.CHART1_COLOR;
           labels = AppConstants.CHART1_LABELS;
+          title = 'Categories';
           break; 
         case 'chart2':
           type = "doughnut";
           data_counts = this.chartData2;
           color = AppConstants.CHART2_COLOR;
           labels = AppConstants.CHART2_LABELS;
+          title = 'Severity';
           break;
         case 'chart3':
-          type = "pie";
+          type = "horizontalBar";
           data_counts = this.chartData3;
           color = AppConstants.CHART3_COLOR;
           labels = AppConstants.CHART3_LABELS;
+          title = 'Priority';
+          isLegendVisible = false;
           break;
         case 'chart4':
           type = "pie";
           data_counts = this.chartData4;
           color = AppConstants.CHART4_COLOR;
           labels = AppConstants.CHART4_LABELS;
+          title = 'Satisfaction';
           break;
       }
       let data_chart = {
@@ -148,13 +155,23 @@ export default {
                   datasets: [{
                       data: data_counts,
                       backgroundColor: color,
-                      borderColor: ["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
+                      borderColor: color,
                       borderWidth:1                   
                   }],
                   labels: labels
             },
-            options: chart_options
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              title: {
+                  display: true,
+                  text: title
+              },
+              legend: {
+                  display: isLegendVisible,
+              }
             }
+      }
       return data_chart;
     },
     createChart(chartId, chartData) {

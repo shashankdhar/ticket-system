@@ -56,7 +56,7 @@ export default {
       sortKey: '',
       sortOrders: sortOrders,
       startRow: 0,
-      rowsPerPage: 8,
+      rowsPerPage: 10,
       isModalVisible: false,
       cticket: {}
     }

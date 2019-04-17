@@ -18,7 +18,7 @@
 
 .container-details > .card-ticket-table {
   width: 100%;
-  min-height: 330px;
+  min-height: 370px;
   overflow: auto;
   font-size: 0.8rem;
 /*  margin: 0;
