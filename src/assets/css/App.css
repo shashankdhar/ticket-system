@@ -137,14 +137,14 @@ form .btn-login:hover {
 form .error-login {
   color: #e35373;
   align-content: center;
-  font-size: 17px;
-  padding: 5px 15px;
+  font-size: 15px;
+  padding: 5px;
   border-radius: 3px;
   text-align: center;
   background-color: #f8d7da;
   border-color: #f5c6cb;
   display: block;
-  width: 40%;
+  width: 380px;
   margin: 10px auto 0 auto;
 }
 
