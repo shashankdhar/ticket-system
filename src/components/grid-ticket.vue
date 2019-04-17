@@ -58,7 +58,7 @@ export default {
       startRow: 0,
       rowsPerPage: 8,
       isModalVisible: false,
-      cticket: null
+      cticket: {}
     }
   },
   computed: {

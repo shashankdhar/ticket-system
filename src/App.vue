@@ -6,7 +6,6 @@
 
 <script>
   
-  import TicketDetails from '@/views/Details.vue'
   import router from '@/router'
 
   export default {
