@@ -1,6 +1,11 @@
-# ticket-system
+# Ticket-system : A single page application made with vue.
 
 ## Project setup
+
+```
+git clone https://github.com/shashankdhar/ticket-system.git
+```
+
 ```
 npm install
 ```
@@ -12,7 +17,7 @@ npm run build
 
 ### For environments using Node ,the easiest way to run a static would be to use "serve"!
 
-## If you dont have have serve installed, run the command below
+### If you dont have have serve installed, run the command below
 ```
 npm install -g serve
 ```
