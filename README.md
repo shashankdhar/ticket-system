@@ -5,25 +5,21 @@
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
 ### Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Run your tests
+### For environments using Node ,the easiest way to run a static would be to use "serve"!
+
+## If you dont have have serve installed, run the command below
 ```
-npm run test
+npm install -g serve
 ```
 
-### Lints and fixes files
+### Starts the server and deploys the dist
 ```
-npm run lint
+serve -s build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To access the url go to http://localhost:5000 on your machine.
