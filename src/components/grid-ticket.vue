@@ -7,8 +7,15 @@
               <input type="text" name="query" v-model="filterKey" class="search form-control" placeholder="Search" />
             </div> 
             <div class="form-group float-right">
-              <a href="#" class="btn" @click=movePages(-1)>Back</a>
-              <a href="#" class="btn" @click=movePages(1)>Next</a>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" :class="{ disabled: currentPage == 0 }" ><a @click=movePages(-1) class="page-link" href="#">Previous</a></li>
+                  <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0" class="page-item">
+                     <a class="page-link" href="#" @click="setPage(pageNumber - 1)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ pageNumber }}</a>
+                  </li>
+                  <li class="page-item" :class="{ disabled: currentPage == totalPages - 1 }"><a @click=movePages(1) class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav>
             </div>          
           </div>
       </form>
@@ -57,7 +64,9 @@ export default {
       sortOrders: sortOrders,
       startRow: 0,
       rowsPerPage: 10,
+      currentPage: 0,
       isModalVisible: false,
+      resultCount: 0,
       cticket: {}
     }
   },
@@ -81,7 +90,11 @@ export default {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
+      this.resultCount = tickets.length;
       return tickets.slice(this.startRow, this.startRow + this.rowsPerPage)
+    },
+    totalPages: function() {
+      return Math.ceil(this.resultCount / this.rowsPerPage)
     }
   },
   filters: {
@@ -95,11 +108,16 @@ export default {
       this.sortOrders[key] = this.sortOrders[key] * -1
     },
     movePages: function(amount) {
+      this.currentPage = this.currentPage - amount;
       var newStartRow = this.startRow + (amount * this.rowsPerPage);
       if (newStartRow >= 0 && newStartRow < this.tickets.length) {
         this.startRow = newStartRow;
       }
     },
+    setPage: function(pageNumber) {
+      this.movePages(pageNumber - this.currentPage);
+      this.currentPage = pageNumber;
+    },  
     showModal(ticket) {
       this.cticket = ticket;
       this.isModalVisible = true;
