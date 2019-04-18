@@ -2,6 +2,7 @@
     padding: 0.25rem 1rem;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .detail-wrapper .navbar-brand {
@@ -80,8 +81,16 @@ form{
   margin-top: 8px;
 }
 
+.logo {
+  height: 45px;
+}
+
 .card-content .pagination {
   margin: 0;
+}
+
+.card-content .pagination .pagesearch {
+  width: 80px;
 }
 
 @media only screen and (min-width: 768px) {

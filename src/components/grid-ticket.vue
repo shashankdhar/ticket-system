@@ -2,37 +2,47 @@
 <template>
   <section class="table-responsive">
       <form class="form-inline card-content align-items-right">
-          <div class="col-sm-12 offset-md-6 col-md-6">
-            <div class="form-group float-right">
-              <input type="text" name="query" v-model="filterKey" class="search form-control" placeholder="Search" />
+          <div class="col-sm-12">
+            <div class="form-group float-right pl-1">
+                <input type="text" name="query" v-model="filterKey" class="search form-control pr-2" placeholder="Search" />              
             </div> 
             <div class="form-group float-right">
               <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item" :class="{ disabled: currentPage == 0 }" ><a @click=movePages(-1) class="page-link" href="#">Previous</a></li>
-                  <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0" class="page-item">
-                     <a class="page-link" href="#" @click="setPage(pageNumber - 1)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ pageNumber }}</a>
+                <ul class="pagination">                  
+                  <li class="page-item pl-1" :class="{ disabled: currentPage === 1 }">
+                    <a @click="setPage(1)" class="page-link" href="#">First</a>
                   </li>
-                  <li class="page-item" :class="{ disabled: currentPage == totalPages - 1 }"><a @click=movePages(1) class="page-link" href="#">Next</a></li>
+                  <li class="page-item pl-1" :class="{ disabled: currentPage === 1 }" >
+                    <a @click=movePages(-1) class="page-link" href="#">Previous</a>
+                  </li>
+                  <li class="page-item pl-1" :class="{ disabled: currentPage == totalPages }">
+                    <a @click=movePages(1) class="page-link" href="#">Next</a>
+                  </li>
+                  <li class="page-item px-1" :class="{ disabled: currentPage === totalPages }">
+                    <a @click="setPage(totalPages - 1)" class="page-link" href="#">Last</a>
+                  </li>
+                  <li class="page-item">
+                    <input type="number" min="1" class="form-control pagesearch" v-model="currentNewPage" />
+                  </li>
                 </ul>
               </nav>
-            </div>          
+            </div>
           </div>
       </form>
       <table class="table table-striped table-bordered table-hover table-sm">
         <thead>
           <tr>
-            <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+            <th v-for="(key,value) in ColMapData" @click="sortBy(value)" :class="{ active: sortKey == value }">
               {{ key | capitalize }}
-              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+              <span class="arrow" :class="sortOrders[value] > 0 ? 'asc' : 'dsc'">
               </span>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="entry in filteredTickets" @click="showModal(entry)">
-            <td v-for="key in columns">
-              {{entry[key]}}
+            <td v-for="(key,value) in ColMapData">
+              {{entry[value]}}
             </td>
           </tr>
         </tbody>
@@ -44,6 +54,7 @@
 <script>
 
 import modal from '@/components/modal-ticket.vue';
+import * as AppConstants from "../constant";
 
 export default {
   components: {
@@ -51,20 +62,23 @@ export default {
   },
   props: {
     tickets: Array,
-    columns: Array,
-    filterKey: String
+    columns: Array
   },
   data: function () {
     var sortOrders = {}
     this.columns.forEach(function (key) {
       sortOrders[key] = 1
     })
+    var ColMapData = AppConstants.MAP_TABLE_DATA;
     return {
       sortKey: '',
       sortOrders: sortOrders,
+      ColMapData: ColMapData,
       startRow: 0,
       rowsPerPage: 8,
-      currentPage: 0,
+      currentPage: 1,
+      currentNewPage: 1,
+      filterKey: '',
       isModalVisible: false,
       resultCount: 0,
       cticket: {}
@@ -79,7 +93,7 @@ export default {
       if (filterKey) {
         tickets = tickets.filter(function (row) {
           return Object.keys(row).some(function (key) {
-            return String(row[key]).toLowerCase().indexOf(filterKey) > -1
+            return String(row[key]).toLowerCase().match(filterKey)
           })
         })
       }
@@ -102,13 +116,20 @@ export default {
       return str.charAt(0).toUpperCase() + str.slice(1)
     }
   },
+  watch: {
+    currentNewPage() {
+        this.setPage(this.currentNewPage);
+    }
+  },
   methods: {
     sortBy: function (key) {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
+      this.setPage(1);
     },
     movePages: function(amount) {
-      this.currentPage = this.currentPage - amount;
+      this.currentPage = this.currentPage + amount;
+      this.currentNewPage = this.currentPage;      
       var newStartRow = this.startRow + (amount * this.rowsPerPage);
       if (newStartRow >= 0 && newStartRow < this.tickets.length) {
         this.startRow = newStartRow;
@@ -116,8 +137,7 @@ export default {
     },
     setPage: function(pageNumber) {
       this.movePages(pageNumber - this.currentPage);
-      this.currentPage = pageNumber;
-    },  
+    },
     showModal(ticket) {
       this.cticket = ticket;
       this.isModalVisible = true;

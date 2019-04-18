@@ -1,7 +1,9 @@
 <template>
   <main class="detail-wrapper">
     <nav class="navbar navbar-light">
-      <span class="navbar-brand mb-0 h1">NorthPark Inovations</span>
+      <span class="navbar-brand mb-0 h1"
+        <img class="logo" :src=logo>
+      </span>
       <button class="btn btn-outline-info" type="button" @click="Logout">Logout</button>
     </nav>
     <div class="container-details">
@@ -21,7 +23,7 @@
     <div class="container-details">
       <div class="card card-ticket-table">
         <div class="col-sm-12">
-            <gridTicket :tickets="gridData" :columns="gridColumns" :filter-key="searchQuery"></gridTicket> 
+            <gridTicket :tickets="gridData" :columns="gridColumns"></gridTicket> 
         </div>      
       </div>
     </div>
@@ -33,6 +35,7 @@
 import Chart from 'chart.js';
 import gridTicket from '@/components/grid-ticket.vue';
 import tickets from '@/assets/Sample Data.json';
+import logo from '@/assets/logo.png';
 import * as AppConstants from "../constant";
 import router from '@/router';
 
@@ -98,12 +101,13 @@ export default {
   data () {
     return {
       searchQuery: '',
-      gridColumns: ['ticket', 'Requestor', 'Requestor', 'RequestorSeniority', 'FiledAgainst', 'TicketType', 'Severity', 'Priority'],
+      gridColumns: ['ticket', 'Requestor', 'RequestorSeniority', 'ITOwner', 'FiledAgainst', 'TicketType', 'Severity', 'Priority'],
       gridData: tickets,
       chartData1: arr_count_categories,
       chartData2: arr_count_severity,
       chartData3: arr_count_satisfaction,
-      chartData4: arr_count_priority
+      chartData4: arr_count_priority,
+      logo: logo,
     }
   },
   components: {
