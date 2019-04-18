@@ -1,6 +1,11 @@
 .detail-wrapper .navbar {
-    background-color: rgb(227, 242, 253);
     padding: 0.25rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.detail-wrapper .navbar-brand {
+  color: rgb(35, 151, 236);
 }
 
 .container-details {
@@ -19,7 +24,7 @@
 
 .container-details > .card-ticket-table {
   width: 100%;
-  min-height: 370px;
+  min-height: 330px;
   overflow: auto;
   font-size: 0.8rem;
 /*  margin: 0;

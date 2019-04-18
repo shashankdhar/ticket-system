@@ -16,8 +16,8 @@
 
 <script>
 
-import Users from '@/assets/User.json'
-import router from '@/router'
+import Users from '@/assets/User.json';
+import router from '@/router';
 
 export default {
   name: 'SignInForm',

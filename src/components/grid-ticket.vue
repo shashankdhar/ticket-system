@@ -43,7 +43,7 @@
 
 <script>
 
-import modal from '@/components/modal-ticket.vue'
+import modal from '@/components/modal-ticket.vue';
 
 export default {
   components: {

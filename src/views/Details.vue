@@ -1,5 +1,9 @@
 <template>
   <main class="detail-wrapper">
+    <nav class="navbar navbar-light">
+      <span class="navbar-brand mb-0 h1">NorthPark Inovations</span>
+      <button class="btn btn-outline-info" type="button" @click="Logout">Logout</button>
+    </nav>
     <div class="container-details">
       <div class="card">
         <canvas id="chart1"></canvas>
@@ -27,9 +31,10 @@
 <script>
 
 import Chart from 'chart.js';
-import gridTicket from '@/components/grid-ticket.vue'
-import tickets from '@/assets/Sample Data.json'
+import gridTicket from '@/components/grid-ticket.vue';
+import tickets from '@/assets/Sample Data.json';
 import * as AppConstants from "../constant";
+import router from '@/router';
 
 const data_categories = { 'Software' : 0, 'Hardware' : 0, 'Systems' : 0, 'Access/Login' : 0 }
 const data_severity = { '0': 0, '1' : 0, '2' : 0, '3' : 0, '4' : 0 }
@@ -181,6 +186,9 @@ export default {
         data: chartData.data,
         options: chartData.options,
       });
+    },
+    Logout() {
+      router.replace('/');
     }
   }
 }
