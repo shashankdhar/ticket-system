@@ -1,8 +1,8 @@
 <template>
   <main class="detail-wrapper">
     <nav class="navbar navbar-light">
-      <span class="navbar-brand mb-0 h1"
-        <img class="logo" :src=logo>
+      <span class="navbar-brand mb-0 h1">
+        <img class="logo" :src=logo />
       </span>
       <button class="btn btn-outline-info" type="button" @click="Logout">Logout</button>
     </nav>
@@ -44,7 +44,7 @@ const data_severity = { '0': 0, '1' : 0, '2' : 0, '3' : 0, '4' : 0 }
 const data_priority = { '0' : 0, '1' : 0, '2' : 0, '3' : 0 }
 const data_satisfaction = { '0' : 0, '1' : 0, '2' : 0, '3' : 0 }
 
-const gridData = tickets.forEach(function(ticket) {
+tickets.forEach(function(ticket) {
    if (data_categories.hasOwnProperty(ticket.FiledAgainst)) {
       data_categories[ticket.FiledAgainst] += 1; 
    }
@@ -62,11 +62,6 @@ const gridData = tickets.forEach(function(ticket) {
    }
 
 });
-
-const chart_options = {
-  responsive: true,
-  maintainAspectRatio: false
-}
 
 const arr_count_categories = [];
 const arr_count_severity = [];
@@ -185,7 +180,7 @@ export default {
     },
     createChart(chartId, chartData) {
       const ctx = document.getElementById(chartId);
-      const myChart = new Chart(ctx, {
+      new Chart(ctx, {
         type: chartData.type,
         data: chartData.data,
         options: chartData.options,

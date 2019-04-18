@@ -32,16 +32,16 @@
       <table class="table table-striped table-bordered table-hover table-sm">
         <thead>
           <tr>
-            <th v-for="(key,value) in ColMapData" @click="sortBy(value)" :class="{ active: sortKey == value }">
-              {{ key | capitalize }}
+            <th v-for="(key,value) in ColMapData" :key="key" @click="sortBy(value)" :class="{ active: sortKey == value }">
+              {{ key }}
               <span class="arrow" :class="sortOrders[value] > 0 ? 'asc' : 'dsc'">
               </span>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="entry in filteredTickets" @click="showModal(entry)">
-            <td v-for="(key,value) in ColMapData">
+          <tr v-for="entry in filteredTickets" :key="entry" @click="showModal(entry)">
+            <td v-for="(key,value) in ColMapData" :key="key">
               {{entry[value]}}
             </td>
           </tr>
@@ -104,16 +104,11 @@ export default {
           return (a === b ? 0 : a > b ? 1 : -1) * order
         })
       }
-      this.resultCount = tickets.length;
+      this.updateTotalCount(tickets.length)
       return tickets.slice(this.startRow, this.startRow + this.rowsPerPage)
     },
     totalPages: function() {
       return Math.ceil(this.resultCount / this.rowsPerPage)
-    }
-  },
-  filters: {
-    capitalize: function (str) {
-      return str.charAt(0).toUpperCase() + str.slice(1)
     }
   },
   watch: {
@@ -126,6 +121,9 @@ export default {
       this.sortKey = key
       this.sortOrders[key] = this.sortOrders[key] * -1
       this.setPage(1);
+    },
+    updateTotalCount: function (count) {
+        this.resultCount = count;
     },
     movePages: function(amount) {
       this.currentPage = this.currentPage + amount;
