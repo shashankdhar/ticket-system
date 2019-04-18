@@ -63,7 +63,7 @@ export default {
       sortKey: '',
       sortOrders: sortOrders,
       startRow: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 8,
       currentPage: 0,
       isModalVisible: false,
       resultCount: 0,
