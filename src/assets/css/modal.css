@@ -73,8 +73,8 @@
     box-shadow: 2px 2px 5px 1px;
     /* margin-top: -25%; */
     /* margin-left: -25%; */
-    width: 25%;
-    height: 65%;
+    width: 75%;
+    height: 75%;
     overflow: hidden;
     outline: 0;
 }
@@ -142,3 +142,11 @@
     border-radius: 2px;
     padding: 5px;
   }
+
+  @media only screen and (min-width: 768px) {
+    /* tablets and desktop */
+    .modal-backdrop .modal-ticket {
+      width: 25%;
+      height: 65%;
+    }
+}
