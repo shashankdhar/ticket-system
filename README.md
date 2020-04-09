@@ -1,30 +1,36 @@
-# Ticket-system : A single page application made with vue.
+# Ticket-system : A single page application made with Vue.js
+
+![Sample login page](images/view1.png)
+
+
+![Dashboard for a Ticketing system with charts and a grid](images/view2.png)
+
+
+![Details of a ticket can be viewed by selecting a record in the grid](images/view3.png)
+
 
 ## Project setup
+
+### Clone the repository
 
 ```
 git clone https://github.com/shashankdhar/ticket-system.git
 ```
 
+### Install dependencies 
+
 ```
 npm install
 ```
 
-### Compiles and minifies for production
+### Run the app in development mode.
+
+```
+npm run serve
+```
+
+### Builds the app for production to the build folder.
+
 ```
 npm run build
 ```
-
-### For environments using Node ,the easiest way to run a static would be to use "serve"!
-
-### If you dont have have serve installed, run the command below
-```
-npm install -g serve
-```
-
-### Starts the server and deploys the dist
-```
-serve -s build
-```
-
-To access the url go to http://localhost:3000 on your machine.
