@@ -1,9 +1,6 @@
 <template>
   <main class="detail-wrapper">
     <nav class="navbar navbar-light">
-      <span class="navbar-brand mb-0 h1">
-        <img class="logo" :src=logo />
-      </span>
       <button class="btn btn-outline-info" type="button" @click="Logout">Logout</button>
     </nav>
     <div class="container-details">
@@ -35,7 +32,6 @@
 import Chart from 'chart.js';
 import gridTicket from '@/components/grid-ticket.vue';
 import tickets from '@/assets/Sample Data.json';
-import logo from '@/assets/logo.png';
 import * as AppConstants from "../constant";
 import router from '@/router';
 
@@ -101,8 +97,7 @@ export default {
       chartData1: arr_count_categories,
       chartData2: arr_count_severity,
       chartData3: arr_count_satisfaction,
-      chartData4: arr_count_priority,
-      logo: logo,
+      chartData4: arr_count_priority
     }
   },
   components: {
