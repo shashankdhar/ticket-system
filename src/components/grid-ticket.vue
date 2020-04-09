@@ -40,7 +40,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="entry in filteredTickets" :key="entry" @click="showModal(entry)">
+          <tr v-for="entry in filteredTickets" :key="entry['Ticket']" @click="showModal(entry)">
             <td v-for="(key,value) in ColMapData" :key="key">
               {{entry[value]}}
             </td>
